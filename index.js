@@ -15,7 +15,7 @@ app.use(cors())
 
 // connect database to mongoose
 
-const CONNECTION_URL=""
+const CONNECTION_URL="mongodb+srv://palmanukumar53:BaQTZfqBIIdjMc66@cluster0.glcb4wf.mongodb.net/"
 
 // any error in connection
 
@@ -36,7 +36,6 @@ const PostSchema = mongoose.Schema({
 })
 
 const Post=mongoose.model('Post',PostSchema);
-
 
 
 // create a api to post a data using a route
