@@ -15,7 +15,7 @@ app.use(cors())
 
 // connect database to mongoose
 
-const CONNECTION_URL="mongodb+srv://palmanukumar53:BaQTZfqBIIdjMc66@cluster0.glcb4wf.mongodb.net/"
+const CONNECTION_URL=""
 
 // any error in connection
 
