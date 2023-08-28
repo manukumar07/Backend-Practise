@@ -1,21 +1,16 @@
 
-// import { models } from 'mongoose';
-
 const express =require ('express');
-
 // import mongoose
 const mongoose=require('mongoose');
-
 // import cors
 const cors=require('cors');
-
 const app=express()
-app.use(cors())
 
+app.use(cors())
 
 // connect database to mongoose
 
-const CONNECTION_URL=""
+const CONNECTION_URL="mongodb+srv://palmanukumar53:BaQTZfqBIIdjMc66@cluster0.glcb4wf.mongodb.net/"
 
 // any error in connection
 
@@ -35,7 +30,7 @@ const PostSchema = mongoose.Schema({
     "description":String
 })
 
-const Post=mongoose.model('Post',PostSchema);
+const Post = mongoose.model('Posts',PostSchema);
 
 
 // create a api to post a data using a route
@@ -47,10 +42,26 @@ app.post('/create',async(req,res) => {
 
 //create a api to get the data by use a route
 
-app.post('/',async(req,res) => {
-    const GetPosts =await Post.find();
-    res.json({data:GetPosts})
+
+app.get('/', async(req,res) => {
+    const posts =await Post.find();
+    res.json({Posts:posts})
 })
+
+// app.get("/:id", async(req,res)=>{
+//     const posts= await Post.find({_id:req.params.id});
+//     res.json({Posts:posts})
+
+// })
+app.get("/updatePost/:id", async(req,res)=>{
+    const updatePost = await Post.findByIdAndUpdate(req.params.id,req.body)
+    res.json({data:updatePost})
+
+})
+
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+//   })
 
 app.listen(5000,()=>{
     console.log('Connection Successfully')
