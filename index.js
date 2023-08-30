@@ -26,7 +26,7 @@ mongoose.connect(CONNECTION_URL).then(()=>{
 // create a schema 
 
 const PostSchema = mongoose.Schema({
-    "title":String,
+    "title": String ,
     "description":String
 })
 
@@ -59,9 +59,16 @@ app.get("/updatePost/:id", async(req,res)=>{
 
 })
 
+app.delete("/delete/:id", async(req,res)=>{
+    await Post.findByIdAndDelete(req.params.id)
+    res.send("Post delete Sucessfully")
+
+})
+
 // app.get('/', (req, res) => {
 //     res.send('Hello World!')
 //   })
+
 
 app.listen(5000,()=>{
     console.log('Connection Successfully')
