@@ -1,79 +1,92 @@
 
-const express =require ('express');
-// import mongoose
-const mongoose=require('mongoose');
-// import cors
-const cors=require('cors');
-const app=express()
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express(); 
+app.use(express.json()); 
+app.use(cors());
+require('dotenv').config();
 
-app.use(cors())
+const PORT = process.env.PORT || 5000;
 
-// connect database to mongoose
+// Define the MongoDB Connection URL
 
-const CONNECTION_URL="mongodb+srv://palmanukumar53:BaQTZfqBIIdjMc66@cluster0.glcb4wf.mongodb.net/"
+const Connection_URL = process.env.MONGODB_URL;
 
-// any error in connection
+// Database Connect
 
-// mongoose.connect(CONNECTION_URL,{
-//     useNewUrlParser: true,
-//     useFindAndModify: false,
-//     useUnifiedTopology: true
-// })
-
-mongoose.connect(CONNECTION_URL).then(()=>{
+mongoose.connect( Connection_URL )
+.then(()=>{
     console.log('Database Connected');
 })
-// create a schema 
+
+// Database connect
+// mongoose
+//   .connect(CONNECTION_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log('Database Connected');
+//   })
+//   .catch((error) => {
+//     console.error('Error connecting to the database:', error);
+//   });
+
+// Create a Schema 
 
 const PostSchema = mongoose.Schema({
-    "title": String ,
-    "description":String
+    title: String,
+    description: String
+});
+
+const Post = mongoose.model('Posts', PostSchema);
+
+
+// create a api to post a data using a Route..
+
+app.post('/create', async (req, res) => {
+        const newPost = await Post.create(req.body);
+        res.json({ data: newPost }); 
 })
 
-const Post = mongoose.model('Posts',PostSchema);
+// To GET the DATA 
 
+app.get('/', async (req, res) => {
+        const posts = await Post.find();
+        res.json({ Posts: posts }); 
+});
 
-// create a api to post a data using a route
+// GET the DATA using the Id
 
-app.post('/create',async(req,res) => {
-    const NewPosts =await Post.create(req.body);
-    res.json({data:NewPosts})
+app.get('/:id',async (req,res)=>{
+    const posts = await Post.find({_id: req.params.id });
+    res.json({Posts: posts});
+});
+
+// UPDATE The DATA Using Id
+
+app.patch('/updatePost/:id',async(req,res)=>{
+    const updatePost = await Post.findByIdAndUpdate(req.params.id,req.body);
+    res.json({data: updatePost})
 })
 
-//create a api to get the data by use a route
+// DELETE the Data
 
-
-app.get('/', async(req,res) => {
-    const posts =await Post.find();
-    res.json({Posts:posts})
+app.delete('/deletePost/:id',async(req,res)=>{
+    const deletePost = await Post.findByIdAndDelete(req.params.id);
+    res.send("Post Deleted Successfully")
 })
 
-// app.get("/:id", async(req,res)=>{
-//     const posts= await Post.find({_id:req.params.id});
-//     res.json({Posts:posts})
-
+// app.listen(5000,()=>{
+//     console.log('Connection Successfully')
 // })
-app.get("/updatePost/:id", async(req,res)=>{
-    const updatePost = await Post.findByIdAndUpdate(req.params.id,req.body)
-    res.json({data:updatePost})
 
-})
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 
-app.delete("/delete/:id", async(req,res)=>{
-    await Post.findByIdAndDelete(req.params.id)
-    res.send("Post delete Sucessfully")
-
-})
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-//   })
-
-
-app.listen(5000,()=>{
-    console.log('Connection Successfully')
-})
-
-// how to handle to server to provide a server to client to provide data security
-// cors
+// // app.get('/', (req, res) => {
+// //     res.send('Hello World!')
+// })
 
