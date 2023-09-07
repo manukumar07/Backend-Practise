@@ -5,6 +5,8 @@ const cors = require('cors');
 const app = express(); 
 app.use(express.json()); 
 app.use(cors());
+const PostSchema = require('./model/PostSchema');
+
 require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
@@ -19,29 +21,6 @@ mongoose.connect( Connection_URL )
 .then(()=>{
     console.log('Database Connected');
 })
-
-// Database connect
-// mongoose
-//   .connect(CONNECTION_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log('Database Connected');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to the database:', error);
-//   });
-
-// Create a Schema 
-
-const PostSchema = mongoose.Schema({
-    title: String,
-    description: String
-});
-
-const Post = mongoose.model('Posts', PostSchema);
-
 
 // create a api to post a data using a Route..
 
@@ -86,7 +65,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 
-// // app.get('/', (req, res) => {
-// //     res.send('Hello World!')
-// })
 
