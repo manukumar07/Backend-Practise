@@ -1,11 +1,18 @@
 import React from 'react';
-import Form from './components/Form';
+import {  BrowserRouter ,  Routes,  Route, } from 'react-router-dom';
+import Login from './components/Login.js'
+import Signup from './components/Signup.js';
 
 function App() {
   return (
-    <div className="App">
-      <Form />
-    </div>
+   <>
+       <BrowserRouter>
+        <Routes>
+        <Route exact path='/Signup' element={<Signup />}></Route>  
+        <Route exact path='/Login' element={ <Login/>}></Route>  
+        </Routes>
+        </BrowserRouter>
+   </>
   );
 }
 

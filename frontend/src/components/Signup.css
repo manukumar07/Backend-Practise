@@ -1,0 +1,43 @@
+/* Base styles for the form */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+    border:3px solid black;
+    margin-top:60px;
+    border-radius:25px;
+    background-color:grey;
+
+  }
+  label{
+    font-size:15px;
+    font-weight:600;
+  }
+  
+  label,
+  input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius:5px;
+    height:20px;
+  }
+  input{
+    height:30px;
+  }
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+    /* Adjust form width for smaller screens */
+    form {
+      max-width: 100%;
+    }
+  }
+  
